@@ -1,0 +1,17 @@
+body {
+    
+    background-color: #efede8;
+}
+
+.stButton>button {
+    color: #c28710 ;
+    background-color: #F5F5F5
+}
+
+.stTextInput>div>div>input {
+    color: #b39a86 ;
+}
+
+.stLineChart>line-chart {
+    background-color: #F5F5F5
+}

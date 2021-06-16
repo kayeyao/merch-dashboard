@@ -620,7 +620,7 @@ def price_bands_nmv(year):
     fig.add_trace(go.Histogram(x=df['Current Price'], y=df['%Items Sold'], xbins=dict(size=500), name = '%Items Sold', histfunc="sum"))
     fig.add_trace(go.Histogram(x=df['Current Price'], xbins=dict(size=500), name = '%Sku Count', histnorm="probability"))
                                  
-    fig.update_layout(title_text=f'{brand} Price Distribution - Week {latest_week}', xaxis_title_text='Price in PHP', bargap=0.2, width=850, height=400, margin=dict(l=0, r=0, t=20, b=0))
+    fig.update_layout(xaxis_title_text='Price in PHP', bargap=0.2, width=850, height=400, margin=dict(l=0, r=0, t=20, b=0))
     fig.update_yaxes(title_text='Percent',tickformat = '%')
     
     st.plotly_chart(fig)

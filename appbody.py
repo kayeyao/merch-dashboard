@@ -24,37 +24,47 @@ sales_df = sales_df.fillna(value = fill_values)
 inventory_df = inventory_df.fillna(value = fill_values)
 prices_df = prices_df.fillna(value = fill_values)
 
-sales_df['GMV'] = sales_df['GMV (€) static'].str.replace(',','').astype(float)
-sales_df['NMV'] = sales_df['NMV after Provision (€)'].str.replace(',','').astype(float)
-sales_df['PC1'] = sales_df['PC1 provisioned static fx'].str.replace(',','').astype(float)
-sales_df['Discount'] = sales_df['Discount (€)'].str.replace(',','').astype(float)
-sales_df['Markdown'] = sales_df['Markdown (€)'].str.replace(',','').astype(float)
-sales_df['Promo'] = sales_df['Promo (€)'].str.replace(',','').astype(float)
-sales_df['Cart Rule'] = sales_df['Cart Rule Discount (€)'].str.replace(',','').astype(float)
+sales_df['GMV'] = sales_df['GMV (€) static'].astype(str).str.replace(',','').astype(float)
+sales_df['NMV'] = sales_df['NMV after Provision (€)'].astype(str).str.replace(',','').astype(float)
+sales_df['PC1'] = sales_df['PC1 provisioned static fx'].astype(str).str.replace(',','').astype(float)
+sales_df['Discount'] = sales_df['Discount (€)'].astype(str).str.replace(',','').astype(float)
+sales_df['Markdown'] = sales_df['Markdown (€)'].astype(str).str.replace(',','').astype(float)
+sales_df['Promo'] = sales_df['Promo (€)'].astype(str).str.replace(',','').astype(float)
+sales_df['Cart Rule'] = sales_df['Cart Rule Discount (€)'].astype(str).str.replace(',','').astype(float)
 sales_df['Spot Age'] = sales_df['Spot Aging Band'].astype(str)
-sales_df['Brand Name'] = sales_df['Brand Name'].str.upper() 
+sales_df['Brand Name'] = sales_df['Brand Name'].str.upper()
 
 inventory_df['Items Sold'] = inventory_df['items sold'].astype(str).str.replace(',','').astype(float)
-inventory_df['Cost of Sales'] = inventory_df['cost of sales'].str.replace(',','').astype(float)
-inventory_df['SOH Cost'] = inventory_df['soh cost'].str.replace(',','').astype(float)
-inventory_df['SOH Units'] = inventory_df['soh units'].str.replace(',','').astype(float)
-inventory_df['NMV'] = inventory_df['nmv'].str.replace(',','').astype(float)
-inventory_df['GMV'] = inventory_df['gmv'].str.replace(',','').astype(float)
+inventory_df['Cost of Sales'] = inventory_df['cost of sales'].astype(str).str.replace(',','').astype(float)
+inventory_df['SOH Cost'] = inventory_df['soh cost'].astype(str).str.replace(',','').astype(float)
+inventory_df['SOH Units'] = inventory_df['soh units'].astype(str).str.replace(',','').astype(float)
+inventory_df['NMV'] = inventory_df['nmv'].astype(str).str.replace(',','').astype(float)
+inventory_df['GMV'] = inventory_df['gmv'].astype(str).str.replace(',','').astype(float)
 inventory_df['Spot Age'] = inventory_df['Spot Age w Threshold (bin)'].astype(float).astype(int).astype(str)
-inventory_df['Width'] = inventory_df['Width (Visible)'].str.replace(',','').astype(float)
-inventory_df['Inbound Units'] = inventory_df['inbounded stock units'].str.replace(',','').astype(float)
+inventory_df['Width'] = inventory_df['Width (Visible)'].astype(str).str.replace(',','').astype(float)
+inventory_df['Inbound Units'] = inventory_df['inbounded stock units'].astype(str).str.replace(',','').astype(float)
 inventory_df['Discount'] = inventory_df['Discount'].astype(str).str.replace(',','').astype(float)
-inventory_df['Markdown'] = inventory_df['Sales Markdown'].str.replace(',','').astype(float)
+inventory_df['Markdown'] = inventory_df['Sales Markdown'].astype(str).str.replace(',','').astype(float)
 inventory_df['Promo'] = inventory_df['Promo'].astype(str).str.replace(',','').astype(float)
 inventory_df['Retail Year'] = 2021
-inventory_df['Brand Name'] = inventory_df['brand_name'].str.upper() 
+inventory_df['Brand Name'] = inventory_df['brand_name'].str.upper()
 
 prices_df['Spot Age'] = prices_df['Dynamic Online Age w threshold (bin)'].astype(float).astype(int).astype(str)
 prices_df['Price'] = prices_df['Price'].astype(float)
 prices_df['Current Price'] = prices_df['Current Price'].astype(float)
-prices_df['Brand Name'] = prices_df['Brand Name'].str.upper() 
-prices_df['Items Sold'] = prices_df['items_sold'].str.replace(',','').astype(float)
-prices_df['NMV'] = prices_df['nmv_eur_after_return'].str.replace(',','').astype(float)
+prices_df['Items Sold'] = prices_df['items_sold'].astype(str).str.replace(',','').astype(float)
+prices_df['NMV'] = prices_df['nmv_eur_after_return'].astype(str).str.replace(',','').astype(float)
+prices_df['Brand Name'] = prices_df['Brand Name'].str.upper()
+
+# sales_df = sales_df.drop(columns = ['GMV (€) static',
+#        'NMV after Provision (€)', 'PC1 provisioned static fx', 'Discount (€)',
+#        'Markdown (€)', 'Promo (€)', 'Cart Rule Discount (€)'])
+# inventory_df = inventory_df.drop(columns = ['brand_name', 'items sold', 'cost of sales', 'soh cost', 'soh units', 'nmv', 
+#             'Width (Visible)', 'inbounded stock units', 'Sales Markdown', 'gmv'])
+inventory_df = inventory_df.rename(columns = {'retail_week': 'Retail Week', 'department_code': 'Department Code', 
+            'buying_planning_cat_type': 'Buying Planning Cat Type'})
+# prices_df = prices_df.drop(columns = ['Dynamic Online Age w threshold (bin)', 'nmv_eur_after_return', 'items_sold'])
+prices_df = prices_df.rename(columns = {'department_code':'Department Code', 'sub_category_type':'Sub Category Type'})
 
 sales_df = sales_df.drop(columns = ['GMV (€) static',
        'NMV after Provision (€)', 'PC1 provisioned static fx', 'Discount (€)',
@@ -66,10 +76,10 @@ inventory_df = inventory_df.rename(columns = {'retail_week': 'Retail Week', 'dep
 prices_df = prices_df.drop(columns = ['Dynamic Online Age w threshold (bin)', 'nmv_eur_after_return', 'items_sold'])
 prices_df = prices_df.rename(columns = {'department_code':'Department Code', 'sub_category_type':'Sub Category Type'})
 
-departments = np.append('All', sales_df['Department Code'].unique())
-brands = np.append('All',sales_df['Brand Name'].unique())
-categories = np.append('All',sales_df['Buying Planning Cat Type'].unique())
-subcategories = np.append('All',sales_df['Sub Category Type'].unique())
+departments = np.append('All', np.sort(np.delete(sales_df['Department Code'].unique(),0,0)))
+brands = np.append('All',np.sort(np.delete(sales_df['Brand Name'].unique(),0,0)))
+categories = np.append('All',np.sort(np.delete(sales_df['Buying Planning Cat Type'].unique(),0,0)))
+subcategories = np.append('All',np.sort(np.delete(sales_df['Sub Category Type'].unique(),0,0)))
 
 def weekly_nmv_plot(year):
     st.subheader(f"{year - 1} VS {year} Weekly NMV, PC1, Discounts")
@@ -102,10 +112,12 @@ def weekly_nmv_plot(year):
     st.plotly_chart(fig)
     
     
-def weekly_breakdown(year, brand, cat, subcat):
+def weekly_breakdown(year, dept, brand, cat, subcat):
     variable_list = ['GMV', 'NMV', 'Discount', 'Markdown', 'Promo', 'PC1']
     df = sales_df[sales_df['Retail Year'] == year]
-    
+       
+    if dept != 'All':
+        df = df[df['Department Code'] == dept]
     if brand != 'All':
         df = df[df['Brand Name'] == brand]
     if cat != 'All':
@@ -131,13 +143,14 @@ def weekly_breakdown(year, brand, cat, subcat):
 def sales_plot(year):
     st.subheader('Weekly NMV, PC1, Discounts, Markdowns, and Promos')
     
-    col1, col2, col3 = st.beta_columns(3)
+    col1, col2, col3, col4 = st.beta_columns(4)
     
-    brand = col1.selectbox('Brand',brands, index = 0, key=0)
-    cat = col2.selectbox('Category',categories, index = 0, key=0)
-    subcat = col3.selectbox('Subcategory',subcategories, index = 0, key=0)
+    dept = col1.selectbox('Department',departments, index = 0, key=0)
+    brand = col2.selectbox('Brand',brands, index = 0, key=0)
+    cat = col3.selectbox('Category',categories, index = 0, key=0)
+    subcat = col4.selectbox('Subcategory',subcategories, index = 0, key=0)
     
-    df = weekly_breakdown(year, brand, cat, subcat)
+    df = weekly_breakdown(year, dept, brand, cat, subcat)
     
     fig = make_subplots(specs=[[{"secondary_y": True}]])
 
@@ -157,13 +170,14 @@ def sales_plot(year):
 def sales_plot2(year):
     st.subheader('Weekly NMV, PC1, Discounts')
     
-    col1, col2, col3 = st.beta_columns(3)
+    col1, col2, col3, col4 = st.beta_columns(4)
     
-    brand = col1.selectbox('Brand',brands, index = 0, key=1)
-    cat = col2.selectbox('Category',categories, index = 0, key=1)
-    subcat = col3.selectbox('Subcategory',subcategories, index = 0, key=1)
+    dept = col1.selectbox('Department',departments, index = 0, key=1)
+    brand = col2.selectbox('Brand',brands, index = 0, key=1)
+    cat = col3.selectbox('Category',categories, index = 0, key=1)
+    subcat = col4.selectbox('Subcategory',subcategories, index = 0, key=1)
     
-    df = weekly_breakdown(year, brand, cat, subcat)
+    df = weekly_breakdown(year, dept, brand, cat, subcat)
     
     fig = make_subplots(specs=[[{"secondary_y": True}]])
 
@@ -187,11 +201,24 @@ def top_brands_w_avenmv(year):
     latest_week = df['Retail Week'].max()
     latest_month = [latest_week, latest_week - 1, latest_week - 2, latest_week - 3]
     
-    st.subheader(f'Top Brands - Week {latest_week}')
+    st.subheader(f'Top Brands for the Week')
     
-    col1, col2, col3 = st.beta_columns(3)
+    col1, col2, col3, col4 = st.beta_columns(4)
     
-    ave_duration = col1.selectbox('Duration for Weekly Average', ('MTD','YTD'), index = 0, key=2)
+    dept = col1.selectbox('Department', departments, index = 0, key=2)
+    cat = col2.selectbox('Category', categories, index = 0, key=2)
+    subcat = col3.selectbox('Subcategory', subcategories, index = 0, key=2)
+    ave_duration = col4.selectbox('Duration for Weekly Average', ('MTD','YTD'), index = 0, key=2)
+    
+    if dept != "All":
+        df = df[df['Department Code'] == dept]
+        df_0 = df_0[df_0['Department Code'] == dept]
+    if cat != "All":
+        df = df[df['Buying Planning Cat Type'] == cat]
+        df_0 = df_0[df_0['Buying Planning Cat Type'] == cat]
+    if subcat != "All":
+        df = df[df['Sub Category Type'] == subcat]
+        df_0 = df_0[df_0['Sub Category Type'] == subcat]
     
     brand_df = df[df['Retail Week'] == latest_week].groupby('Brand Name')['NMV'].sum().reset_index()  
     brand_df = brand_df.sort_values('NMV', ascending=True).tail(15).reset_index()        
@@ -216,8 +243,8 @@ def top_brands_w_avenmv(year):
     fig.add_trace(go.Bar(y=brand_df['Brand Name'], x=brand_df[f'Average Weekly NMV {year}'], name=f"NMV Weekly Average ({year} {ave_duration})", orientation='h'))
     fig.add_trace(go.Bar(y=brand_df['Brand Name'], x=brand_df['NMV'], name=f"NMV Week {latest_week}", orientation='h'))
 
-    fig.update_xaxes(title_text="NMV in EUR")
-    fig.update_yaxes(title_text = "Brand Name", tickfont={'size':12}, tickformat=".3s")
+    fig.update_xaxes(title_text="NMV in EUR", tickformat=".3s")
+    fig.update_yaxes(title_text = "Brand Name", tickfont={'size':12})
     fig.update_layout(legend_traceorder="reversed", width=900, height=400, margin=dict(l=0, r=0, t=20, b=0))
 
     st.plotly_chart(fig)
@@ -230,9 +257,22 @@ def top_brands(year):
     
     st.subheader(f'Top Brands')
     
-    col1, col2, col3 = st.beta_columns(3)
+    col1, col2, col3, col4 = st.beta_columns(4)
     
-    duration = col1.selectbox('Duration', ('Past Week','Past Month','YTD'), index = 0, key=3)
+    dept = col1.selectbox('Department', departments, index = 0, key=3)
+    cat = col2.selectbox('Category', categories, index = 0, key=3)
+    subcat = col3.selectbox('Subcategory', subcategories, index = 0, key=3)
+    duration = col4.selectbox('Duration', ('Past Week','Past Month','YTD'), index = 0, key=3)
+    
+    if dept != "All":
+        df = df[df['Department Code'] == dept]
+        df_0 = df_0[df_0['Department Code'] == dept]
+    if cat != "All":
+        df = df[df['Buying Planning Cat Type'] == cat]
+        df_0 = df_0[df_0['Buying Planning Cat Type'] == cat]
+    if subcat != "All":
+        df = df[df['Sub Category Type'] == subcat]
+        df_0 = df_0[df_0['Sub Category Type'] == subcat]
     
     if duration == 'Past Week':
         brand_df = df[df['Retail Week'] == latest_week]
@@ -266,20 +306,24 @@ def top_brands(year):
     st.plotly_chart(fig)
 
 def top_cat_perbrand(year):
-    st.subheader(f'Top Categories per Brand')
+    st.subheader(f'Top Categories')
     
-    col1, col2,col3 = st.beta_columns(3)
+    col1, col2, col3, col4 = st.beta_columns(4)
     
-    brand = col1.selectbox('Brand', brands, index=0, key=4)
-    subtype = col2.selectbox('Subtype', ('Category','Subcategory'), index=0, key=4)
-    duration = col3.selectbox('Duration', ('Past Week','Past Month','YTD'), index = 0, key=4)
+    dept = col1.selectbox('Department', departments, index=0, key=4)
+    brand = col2.selectbox('Brand', brands, index=0, key=4)
+    subtype = col3.selectbox('Subtype', ('Category','Subcategory'), index=0, key=4)
+    duration = col4.selectbox('Duration', ('Past Week','Past Month','YTD'), index = 0, key=4)
     
-    if brand == "All":
-        df = sales_df[(sales_df['Retail Year'] == year)]
-        df_0 = sales_df[(sales_df['Retail Year'] == (year - 1))]
-    else:    
-        df = sales_df[(sales_df['Retail Year'] == year) & (sales_df['Brand Name'] == brand)]
-        df_0 = sales_df[(sales_df['Retail Year'] == (year -1)) & (sales_df['Brand Name'] == brand)]
+    df = sales_df[(sales_df['Retail Year'] == year)]
+    df_0 = sales_df[(sales_df['Retail Year'] == (year - 1))]
+    
+    if brand != "All":  
+        df =df[df['Brand Name'] == brand]
+        df_0 =df_0[df_0['Brand Name'] == brand]
+    if dept != "All":  
+        df =df[df['Department Code'] == dept]
+        df_0 =df_0[df_0['Department Code'] == dept]
     
     latest_week = df['Retail Week'].max()
     latest_month = [latest_week, latest_week - 1, latest_week - 2, latest_week - 3]
@@ -322,20 +366,33 @@ def top_cat_perbrand(year):
 def inv_topbrands(year):
     latest_week = sales_df[sales_df['Retail Year'] == 2021]['Retail Week'].max()
     
-    st.subheader(f'Top Brands - NMV, SOH Units, Cost of Sales - Week {latest_week}')
+    st.subheader(f'Top Brands Week {latest_week} - NMV, SOH Units, Cost of Sales')
     
     col1, col2, col3 = st.beta_columns(3)
     
     dept = col1.selectbox('Department', departments, index = 0, key=5)
+    cat = col2.selectbox('Category', categories, index = 0, key=5)
+    subcat = col3.selectbox('Subcategory', subcategories, index = 0, key=5)
     
-    if dept == "All":
-        df = inventory_df
-    else:
-        df = inventory_df[inventory_df['Department Code'] == dept]
+    df = inventory_df
+    
+    if dept != "All":
+        df = df[df['Department Code'] == dept]
+    if cat != "All":
+        df = df[df['Buying Planning Cat Type'] == cat]
+    if subcat != "All":
+        df = df[df['Sub Category Type'] == subcat]
     
     brand_df = df[(df['Retail Week'] == latest_week)].groupby('Brand Name')[['NMV', 'Cost of Sales','SOH Units', 'SOH Cost']].sum().reset_index()
     brand_df['STR%'] = brand_df['Cost of Sales']/(brand_df['Cost of Sales'] + brand_df['SOH Cost'])
     brand_df = brand_df.sort_values('NMV', ascending=False).head(15)
+    
+    inv_df_2021_start = df[df['Retail Week']==latest_week].groupby('Brand Name')['SOH Cost'].sum()
+    inv_df_2021 = df[df['Retail Week'].isin(range(latest_week))].groupby('Brand Name')[['NMV', 'Cost of Sales']].sum().reset_index()
+    inv_df_2021 = inv_df_2021.merge(inv_df_2021_start, on = 'Brand Name', how = 'left')
+    inv_df_2021['STR% 2021'] = inv_df_2021['Cost of Sales']/(inv_df_2021['Cost of Sales'] + inv_df_2021['SOH Cost'])
+    
+    brand_df = brand_df.merge(inv_df_2021[['Brand Name', "STR% 2021"]], on = 'Brand Name', how='left')    
     
     fig = make_subplots(specs=[[{"secondary_y": True}]])
 
@@ -343,6 +400,7 @@ def inv_topbrands(year):
     fig.add_trace(go.Bar(x=brand_df['Brand Name'], y=brand_df['NMV'], name="NMV"), secondary_y = False)
     fig.add_trace(go.Bar(x=brand_df['Brand Name'], y=brand_df['Cost of Sales'], name="Cost of Sales"), secondary_y = False)
     fig.add_trace(go.Scatter(x=brand_df['Brand Name'], y=brand_df['STR%'], name="STR%"), secondary_y = True)
+    fig.add_trace(go.Scatter(x=brand_df['Brand Name'], y=brand_df['STR% 2021'], name="STR% 2021"), secondary_y = True)
         
     fig.update_yaxes(title_text = "Amount in EUR", secondary_y = False, rangemode = 'tozero', tickformat=".3s")
     fig.update_yaxes(title_text = "Percent", secondary_y = True, tickformat = '%', showgrid=False, rangemode = 'tozero')
@@ -354,16 +412,22 @@ def inv_topbrands(year):
 def inv_topbrands_percent(year):
     latest_week = sales_df[sales_df['Retail Year'] == 2021]['Retail Week'].max()
  
-    st.subheader(f'Top Brands - % Contribution of NMV, SOH Units, Items Sold - Week {latest_week}')
+    st.subheader(f'Top Brands Week {latest_week} - % Contribution of NMV, SOH Units, Items Sold')
     
     col1, col2, col3 = st.beta_columns(3)
     
     dept = col1.selectbox('Department', departments, index = 0, key=6)   
+    cat = col2.selectbox('Category', categories, index = 0, key=6)   
+    subcat = col3.selectbox('Subcategory', subcategories, index = 0, key=6)   
+
+    df = inventory_df
     
-    if dept == "All":
-        df = inventory_df
-    else:
-        df = inventory_df[inventory_df['Department Code'] == dept]
+    if dept != "All":
+        df = df[df['Department Code'] == dept]
+    if cat != "All":
+        df = df[df['Buying Planning Cat Type'] == cat]
+    if subcat != "All":
+        df = df[df['Sub Category Type'] == subcat]
         
     brand_df = df[(df['Retail Week'] == latest_week)].groupby('Brand Name')[['NMV','SOH Units','Items Sold','Width']].sum().reset_index()
     brand_df['%NMV'] = brand_df['NMV']/brand_df['NMV'].sum()
@@ -372,7 +436,7 @@ def inv_topbrands_percent(year):
     brand_df['%Width'] = brand_df['Width']/brand_df['Width'].sum()
 
     brand_df = brand_df.sort_values('%NMV', ascending=False).head(15)
-    
+
     fig = make_subplots(specs=[[{"secondary_y": False}]])
 
     fig.add_trace(go.Scatter(x=brand_df['Brand Name'], y=brand_df['%SOH Units'], name="SOH Units"), secondary_y = False)
@@ -389,7 +453,7 @@ def inv_topbrands_percent(year):
 def inv_percat(year):
     latest_week = sales_df[sales_df['Retail Year'] == year]['Retail Week'].max()
     
-    st.subheader(f'Top Categories - NMV, SOH Units, Items Sold - Week {latest_week}')
+    st.subheader(f'Top Categories Week {latest_week} - NMV, SOH Units, Items Sold')
     
     col1, col2, col3 = st.beta_columns(3)
     
@@ -439,7 +503,7 @@ def inv_percat(year):
 def inv_percat_percent(year):
     latest_week = sales_df[sales_df['Retail Year'] == 2021]['Retail Week'].max()
     
-    st.subheader(f'Top Categories - % Contribution of NMV, SOH Units, Items Sold - Week {latest_week}')
+    st.subheader(f'Top Categories Week {latest_week} - % Contribution of NMV, SOH Units, Items Sold')
     
     col1, col2, col3 = st.beta_columns(3)
     
@@ -575,40 +639,64 @@ def inv_agebands_cat_percent(year):
     st.plotly_chart(fig)
     
 def price_bands(year):
-    st.subheader(f'Price Distribution')
+    st.subheader(f'Price Distribution of SKUs')
     
-    col1, col2, col3 = st.beta_columns(3)
+    col1, col2, col3, col4 = st.beta_columns(4)
     
-    brand = col1.selectbox('Brand', brands, index = 0, key=11)
+    dept = col1.selectbox('Department', departments, index = 0, key=11)
+    brand = col2.selectbox('Brand', brands, index = 0, key=11)
+    cat = col3.selectbox('Category', categories, index = 0, key=11)
+    subcat = col4.selectbox('Subcategory', subcategories, index = 0, key=11)
     
-    if brand == 'All':
-        df = prices_df
-    else:
-        df = prices_df[prices_df['Brand Name'] == brand]
+    df = prices_df
+    
+    if dept != 'All':
+        df = df[df['Department Code'] == dept]
+    if brand != 'All':
+        df = df[df['Brand Name'] == brand]
+    if cat != 'All':
+        df = df[df['Buying Planning Cat Type'] == cat]
+    if subcat != 'All':
+        df = df[df['Sub Category Type'] == subcat]
     
     latest_week = sales_df[sales_df['Retail Year']==2021]['Retail Week'].max()
-#     df = df[df['Retail Week'] == latest_week]
 
+    col1, col2 = st.beta_columns(2)
 
+    start_bin, end_bin = col1.slider('Price Range', min_value = 0, max_value = int(df['Price'].max()//500*500), value = (0, int(df['Price'].max()//500*500)), step = 500, key = 11)
+    
     fig = go.Figure()
-    fig.add_trace(go.Histogram(x=df['Current Price'], xbins=dict(size=500), name = 'Current Price'))
-    fig.add_trace(go.Histogram(x=df['Price'], xbins=dict(size=500), name = 'Original Price'))
+    fig.add_trace(go.Histogram(x=df['Current Price'], xbins=dict(size=500, start=start_bin, end=end_bin), name = 'Current Price'))
+    fig.add_trace(go.Histogram(x=df['Price'], xbins=dict(size=500, start=start_bin, end=end_bin), name = 'Original Price'))
                                 
     fig.update_layout(xaxis_title_text='Price in PHP', yaxis_title_text='Count', bargap=0.2, width=850, height=400, margin=dict(l=0, r=0, t=20, b=0))
 
     st.plotly_chart(fig)
     
 def price_bands_nmv(year):
-    st.subheader(f'Price Distribution of NMV, Items Sold')
+    st.subheader(f'Price Distribution of NMV, Items Sold, SKU Count')
     
-    col1, col2, col3 = st.beta_columns(3)
+    col1, col2, col3, col4 = st.beta_columns(4)
     
-    brand = col1.selectbox('Brand', brands, index = 0, key=12)
+    dept = col1.selectbox('Department', departments, index = 0, key=12)
+    brand = col2.selectbox('Brand', brands, index = 0, key=12)
+    cat = col3.selectbox('Category', categories, index = 0, key=12)
+    subcat = col4.selectbox('Subcategory', subcategories, index = 0, key=12)
     
-    if brand == 'All':
-        df = prices_df
-    else:
-        df = prices_df[prices_df['Brand Name'] == brand]
+    df = prices_df
+    
+    if dept != 'All':
+        df = df[df['Department Code'] == dept]
+    if brand != 'All':
+        df = df[df['Brand Name'] == brand]
+    if cat != 'All':
+        df = df[df['Buying Planning Cat Type'] == cat]
+    if subcat != 'All':
+        df = df[df['Sub Category Type'] == subcat]
+    
+    col1, col2 = st.beta_columns(2)
+    
+    start_bin, end_bin = col1.slider('Price Range', min_value = 0, max_value = int(df['Price'].max()//500*500), value = (0, int(df['Price'].max()//500*500)), step = 500, key = 12)
     
     df['%NMV'] = df['NMV']/df['NMV'].sum()
     df['%Items Sold'] = df['NMV']/df['NMV'].sum()
@@ -616,11 +704,65 @@ def price_bands_nmv(year):
     latest_week = sales_df[sales_df['Retail Year']==2021]['Retail Week'].max()
 
     fig = go.Figure()
-    fig.add_trace(go.Histogram(x=df['Current Price'], y=df['%NMV'], xbins=dict(size=500), name = '%NMV', histfunc="sum"))
-    fig.add_trace(go.Histogram(x=df['Current Price'], y=df['%Items Sold'], xbins=dict(size=500), name = '%Items Sold', histfunc="sum"))
-    fig.add_trace(go.Histogram(x=df['Current Price'], xbins=dict(size=500), name = '%Sku Count', histnorm="probability"))
+    fig.add_trace(go.Histogram(x=df['Current Price'], y=df['%NMV'], xbins=dict(size=500, start=start_bin, end=end_bin), name = '%NMV', histfunc="sum"))
+    fig.add_trace(go.Histogram(x=df['Current Price'], y=df['%Items Sold'], xbins=dict(size=500, start=start_bin, end=end_bin), name = '%Items Sold', histfunc="sum"))
+    fig.add_trace(go.Histogram(x=df['Current Price'], xbins=dict(size=500, start=start_bin, end=end_bin), name = '%Sku Count', histnorm="probability"))
                                  
     fig.update_layout(xaxis_title_text='Price in PHP', bargap=0.2, width=850, height=400, margin=dict(l=0, r=0, t=20, b=0))
     fig.update_yaxes(title_text='Percent',tickformat = '%')
     
     st.plotly_chart(fig)
+    
+def brand_info(year):
+    col1, col2, col3, col4 = st.beta_columns(4)
+
+    brand = col1.selectbox('Brand', brands, index = 0, key=13)
+    
+    brand_salesdf = sales_df[(sales_df['Retail Year'] == year) & (sales_df['Brand Name']==brand)]
+    brand_invdf = inventory_df[(inventory_df['Retail Year'] == year) & (inventory_df['Brand Name']==brand)]
+    
+    dept_list = np.append('All', np.sort(brand_salesdf['Department Code'].unique()))
+    cat_list = np.append('All',np.sort(brand_salesdf['Buying Planning Cat Type'].unique()))    
+    subcat_list = np.append('All',np.sort(brand_salesdf['Sub Category Type'].unique()))
+    
+    dept = col2.selectbox('Department', dept_list, index = 0, key=13)
+    cat = col3.selectbox('Category', cat_list, index = 0, key=13)
+    subcat = col4.selectbox('Subcategories', subcat_list, index = 0, key=13)
+    
+    if dept != 'All':
+        brand_salesdf = brand_salesdf[brand_salesdf['Department Code']==dept]
+        brand_invdf = brand_invdf[brand_invdf['Department Code']==dept]
+    if cat != 'All':
+        brand_salesdf = brand_salesdf[brand_salesdf['Buying Planning Cat Type']==cat]
+        brand_invdf = brand_invdf[brand_invdf['Buying Planning Cat Type']==cat]
+    if subcat != 'All':
+        brand_salesdf = brand_salesdf[brand_salesdf['Sub Category Type']==subcat]
+        brand_invdf = brand_invdf[brand_invdf['Sub Category Type']==subcat]
+
+    df_sales = brand_salesdf.groupby('Retail Week')[['GMV','NMV','PC1','Discount','Markdown','Promo']].sum()
+    df_inv = brand_invdf.groupby('Retail Week')[['Cost of Sales', 'Items Sold', 'SOH Cost', 'SOH Units', 'Width']].sum()
+    
+    df = df_sales.merge(df_inv, on = 'Retail Week', how = 'left').reset_index()
+    latest_week = df['Retail Week'].max()
+    
+    df['PC1%'] = df['PC1']/df['NMV']
+    df['Discount%'] = df['Discount']/df['GMV']
+    df['Markdown%'] = df['Markdown']/df['GMV']
+    df['Promo%'] = df['Promo']/df['GMV']
+    df['STR%'] = df['Cost of Sales']/(df['Cost of Sales'] + df['SOH Cost'])    
+    df['% Weekly NMV'] = df['NMV']/sales_df[(sales_df['Retail Year'] == year)&(sales_df['Retail Week'] == latest_week)]['NMV'].sum()
+    
+    df = df[df['Retail Week'] == latest_week].rename(index={latest_week-1:f'Week {latest_week}'})
+
+    final_df1 = df[['GMV','NMV','PC1','Discount','Markdown','Promo', 'Cost of Sales', 'Items Sold', 'SOH Cost', 'SOH Units', 'Width']]
+    final_df2 = df[['% Weekly NMV','PC1%','STR%','Discount%','Markdown%','Promo%']]
+    
+    col1, col2 = st.beta_columns(2)
+    
+    col1.table(final_df1.transpose())
+    col2.table(final_df2.transpose())
+    
+    #final_df.set_index(inplace = True)
+
+    #st.table(final_df)
+    

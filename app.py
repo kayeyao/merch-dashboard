@@ -6,13 +6,20 @@ from streamlit import caching
 import appbody as body
 
 #st.set_page_config(layout="wide")
+
+sales_df = pd.read_csv('Sales_210621.csv')
+inventory_df = pd.read_csv('Inventory_210621.csv')
+prices_df = pd.read_csv('Pricing_210621.csv')
+year = sales_df['Retail Year'].max()
+week = sales_df[sales_df['Retail Year'] == year]['Retail Week'].max()
+
 st.sidebar.title('Merch Dashboard')
+st.sidebar.subheader(f'{year} Week {week}')
+st.sidebar.markdown('_Last updated on June 21, 2021_')
 
 add_selectbox = st.sidebar.radio('Select Dashboard',
-    ("Sales","Inventory","Inventory Aging","Prices")
+    ("Sales","Inventory","Inventory Aging","Pricing")
 )
-
-year = 2021
 
 if add_selectbox == 'Sales':
     st.title("Sales Dashboard")
@@ -41,7 +48,7 @@ if add_selectbox == 'Inventory Aging':
     body.inv_agebands_cat(year)
     body.inv_agebands_cat_percent(year)
     
-if add_selectbox == 'Prices':
+if add_selectbox == 'Pricing':
     st.title("Prices Dashboard")
     st.markdown('<div style="color: #efede8;">.</div>',unsafe_allow_html=True) # space #
 

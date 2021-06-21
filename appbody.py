@@ -10,9 +10,9 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import plotly.express as px
 
-sales_df = pd.read_csv('Sales_210614.csv')
-inventory_df = pd.read_csv('Inventory_210616.csv')
-prices_df = pd.read_csv('Pricing_210616.csv')
+sales_df = pd.read_csv('Sales_210621.csv')
+inventory_df = pd.read_csv('Inventory_210621.csv')
+prices_df = pd.read_csv('Pricing_210621.csv')
 
 fill_values = {'Department Code': '','Brand Name':'','Buying Planning Cat Type':'','Sub Category Type':'', 'Spot Aging Band':0,
     'GMV (€) static':0, 'NMV after Provision (€)':0, 'PC1 provisioned static fx':0, 'Discount (€)':0, 'Markdown (€)':0, 
@@ -96,7 +96,7 @@ def weekly_nmv_plot(year):
     fig.update_layout(width=850, height=400, margin=dict(l=0, r=0, t=20, b=0))
 
     fig.update_xaxes(title_text="Retail Week")
-    fig.update_yaxes(title_text="Amount in EUR", secondary_y=False)
+    fig.update_yaxes(title_text="Amount in EUR", secondary_y=False, tickformat=".3s")
     fig.update_yaxes(title_text="Percent", secondary_y=True, tickformat = '%', showgrid=False, range = [0,0.6])
 
     st.plotly_chart(fig)
@@ -149,7 +149,7 @@ def sales_plot(year):
 
     fig.update_layout(width=850, height=400, margin=dict(l=0, r=0, t=20, b=0))
     fig.update_xaxes(title_text="Retail Week")
-    fig.update_yaxes(title_text="Amount in EUR", secondary_y=False)
+    fig.update_yaxes(title_text="Amount in EUR", secondary_y=False, tickformat=".3s")
     fig.update_yaxes(title_text="Percent", secondary_y=True, tickformat = '%', showgrid=False, range = [0,0.6])
 
     st.plotly_chart(fig)
@@ -176,7 +176,7 @@ def sales_plot2(year):
     fig.update_layout(width=850, height=400, margin=dict(l=0, r=0, t=20, b=0))
     
     fig.update_xaxes(title_text="Retail Week")
-    fig.update_yaxes(title_text="Amount in EUR", secondary_y=False)
+    fig.update_yaxes(title_text="Amount in EUR", secondary_y=False, tickformat=".3s")
     fig.update_yaxes(title_text="Percent", secondary_y=True, tickformat = '%', showgrid=False, range = [0,0.6])
 
     st.plotly_chart(fig)
@@ -217,7 +217,7 @@ def top_brands_w_avenmv(year):
     fig.add_trace(go.Bar(y=brand_df['Brand Name'], x=brand_df['NMV'], name=f"NMV Week {latest_week}", orientation='h'))
 
     fig.update_xaxes(title_text="NMV in EUR")
-    fig.update_yaxes(title_text = "Brand Name", tickfont={'size':12})
+    fig.update_yaxes(title_text = "Brand Name", tickfont={'size':12}, tickformat=".3s")
     fig.update_layout(legend_traceorder="reversed", width=900, height=400, margin=dict(l=0, r=0, t=20, b=0))
 
     st.plotly_chart(fig)
@@ -259,7 +259,7 @@ def top_brands(year):
     fig.add_trace(go.Bar(y=brand_df['Brand Name'], x=brand_df['NMV_y'], name=f"NMV {label} ({year-1})", orientation='h'))
     fig.add_trace(go.Bar(y=brand_df['Brand Name'], x=brand_df['NMV_x'], name=f"NMV {label} ({year})", orientation='h'))  
 
-    fig.update_xaxes(title_text="NMV in EUR")
+    fig.update_xaxes(title_text="NMV in EUR", tickformat=".3s")
     fig.update_yaxes(title_text = "Brand Name", tickfont={'size':12})
     fig.update_layout(legend_traceorder="reversed",  width=900, height=400, margin=dict(l=0, r=0, t=20, b=0))
 
@@ -312,7 +312,7 @@ def top_cat_perbrand(year):
     fig.add_trace(go.Bar(y=brand_df[category], x=brand_df['NMV_y'], name=f"NMV {label} ({year-1})", orientation='h'))
     fig.add_trace(go.Bar(y=brand_df[category], x=brand_df['NMV_x'], name=f"NMV {label} ({year})", orientation='h'))  
 
-    fig.update_xaxes(title_text="NMV in EUR")
+    fig.update_xaxes(title_text="NMV in EUR", tickformat=".3s")
     fig.update_yaxes(title_text = f"{subtype}", tickfont={'size':12})
     fig.update_layout(legend_traceorder="reversed", width=900, height=400, margin=dict(l=0, r=0, t=20, b=0))
 
@@ -344,7 +344,7 @@ def inv_topbrands(year):
     fig.add_trace(go.Bar(x=brand_df['Brand Name'], y=brand_df['Cost of Sales'], name="Cost of Sales"), secondary_y = False)
     fig.add_trace(go.Scatter(x=brand_df['Brand Name'], y=brand_df['STR%'], name="STR%"), secondary_y = True)
         
-    fig.update_yaxes(title_text = "Amount in EUR", secondary_y = False, rangemode = 'tozero')
+    fig.update_yaxes(title_text = "Amount in EUR", secondary_y = False, rangemode = 'tozero', tickformat=".3s")
     fig.update_yaxes(title_text = "Percent", secondary_y = True, tickformat = '%', showgrid=False, rangemode = 'tozero')
     fig.update_xaxes(title_text = f"Brand Name", tickfont={'size':10})
     fig.update_layout(width=850, height=400, margin=dict(l=0, r=0, t=20, b=0))
@@ -429,7 +429,7 @@ def inv_percat(year):
     fig.add_trace(go.Scatter(x=brand_df[category], y=brand_df['STR%'], name=f"STR% Week {latest_week}"), secondary_y = True)
     fig.add_trace(go.Scatter(x=brand_df[category], y=brand_df['STR% 2021'], name="STR% 2021"), secondary_y = True)
                       
-    fig.update_yaxes(title_text = "Amount in EUR", secondary_y = False)
+    fig.update_yaxes(title_text = "Amount in EUR", secondary_y = False, tickformat=".3s")
     fig.update_yaxes(title_text = "Percent", showgrid = False, secondary_y = True, tickformat = '%', range = [0,1])
     fig.update_xaxes(title_text = f"{subtype}", tickfont={'size':10})
     fig.update_layout(width=850, height=400, margin=dict(l=0, r=0, t=20, b=0))
@@ -523,7 +523,7 @@ def inv_agebands_cat(year):
     fig.add_trace(go.Scatter(x=brand_df['Spot Age'], y=brand_df['Promo%'], name="Promo%"), secondary_y = True)
         
     fig.update_xaxes(title_text="Age Band", categoryarray = ['0','30','60','90','120','150','180'])
-    fig.update_yaxes(title_text = "Amount in EUR", tickfont={'size':10})
+    fig.update_yaxes(title_text = "Amount in EUR", tickfont={'size':10}, tickformat=".3s")
     fig.update_yaxes(title_text = "Percent", showgrid = False, secondary_y = True, tickformat = '%', range = [0,1])
     fig.update_layout(width=850, height=400, margin=dict(l=0, r=0, t=20, b=0))
 

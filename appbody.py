@@ -18,7 +18,7 @@ fill_values = {'Department Code': '','Brand Name':'','Buying Planning Cat Type':
     'GMV (€) static':0, 'NMV after Provision (€)':0, 'PC1 provisioned static fx':0, 'Discount (€)':0, 'Markdown (€)':0, 
     'Promo (€)':0, 'Cart Rule Discount (€)':0,'Spot Age w Threshold (bin)':0, 'items sold':0, 'cost of sales':0, 
     'soh cost':0, 'nmv':0, 'soh units': 0, 'Width (Visible)':0, 'inbounded stock units':0, 'inbounded cost':0,  'Discount':0, 
-    'Sales Markdown':0, 'Promo':0, 'gmv':0, 'Dynamic Online Age w threshold (bin)':0, 'Price':0, 'Current Price':0,'nmv_eur_after_return':0,     'items_sold':0}
+    'Sales Markdown':0, 'Promo':0, 'gmv':0, 'Dynamic Online Age w threshold (bin)':0, 'Price':0, 'Current Price':0,'nmv_eur_after_return':0,'items_sold':0}
 
 sales_df = sales_df.fillna(value = fill_values)
 inventory_df = inventory_df.fillna(value = fill_values)
@@ -56,14 +56,14 @@ prices_df['Items Sold'] = prices_df['items_sold'].astype(str).str.replace(',',''
 prices_df['NMV'] = prices_df['nmv_eur_after_return'].astype(str).str.replace(',','').astype(float)
 prices_df['Brand Name'] = prices_df['Brand Name'].str.upper()
 
-# sales_df = sales_df.drop(columns = ['GMV (€) static',
-#        'NMV after Provision (€)', 'PC1 provisioned static fx', 'Discount (€)',
-#        'Markdown (€)', 'Promo (€)', 'Cart Rule Discount (€)'])
-# inventory_df = inventory_df.drop(columns = ['brand_name', 'items sold', 'cost of sales', 'soh cost', 'soh units', 'nmv', 
-#             'Width (Visible)', 'inbounded stock units', 'Sales Markdown', 'gmv'])
+sales_df = sales_df.drop(columns = ['GMV (€) static',
+       'NMV after Provision (€)', 'PC1 provisioned static fx', 'Discount (€)',
+       'Markdown (€)', 'Promo (€)', 'Cart Rule Discount (€)'])
+inventory_df = inventory_df.drop(columns = ['brand_name', 'items sold', 'cost of sales', 'soh cost', 'soh units', 'nmv', 
+            'Width (Visible)', 'inbounded stock units', 'Sales Markdown', 'gmv'])
 inventory_df = inventory_df.rename(columns = {'retail_week': 'Retail Week', 'department_code': 'Department Code', 
             'buying_planning_cat_type': 'Buying Planning Cat Type'})
-# prices_df = prices_df.drop(columns = ['Dynamic Online Age w threshold (bin)', 'nmv_eur_after_return', 'items_sold'])
+prices_df = prices_df.drop(columns = ['Dynamic Online Age w threshold (bin)', 'nmv_eur_after_return', 'items_sold'])
 prices_df = prices_df.rename(columns = {'department_code':'Department Code', 'sub_category_type':'Sub Category Type'})
 
 sales_df = sales_df.drop(columns = ['GMV (€) static',

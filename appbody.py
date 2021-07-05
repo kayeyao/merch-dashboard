@@ -10,9 +10,9 @@ import plotly.graph_objects as go
 from plotly.subplots import make_subplots
 import plotly.express as px
 
-sales_df = pd.read_csv('Sales_210628.csv')
-inventory_df = pd.read_csv('Inventory_210628.csv')
-prices_df = pd.read_csv('Pricing_210628.csv')
+sales_df = pd.read_csv('Sales_210705.csv')
+inventory_df = pd.read_csv('Inventory_210705.csv')
+prices_df = pd.read_csv('Pricing_210705.csv')
 
 fill_values = {'Department Code': '','Brand Name':'','Buying Planning Cat Type':'','Sub Category Type':'', 'Spot Aging Band':0,
     'GMV (€) static':0, 'NMV after Provision (€)':0, 'PC1 provisioned static fx':0, 'Discount (€)':0, 'Markdown (€)':0, 

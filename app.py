@@ -7,15 +7,15 @@ import appbody as body
 
 #st.set_page_config(layout="wide")
 
-sales_df = pd.read_csv('Sales_210628.csv')
-inventory_df = pd.read_csv('Inventory_210628.csv')
-prices_df = pd.read_csv('Pricing_210628.csv')
+sales_df = pd.read_csv('Sales_210705.csv')
+inventory_df = pd.read_csv('Inventory_210705.csv')
+prices_df = pd.read_csv('Pricing_210705.csv')
 year = sales_df['Retail Year'].max()
 week = sales_df[sales_df['Retail Year'] == year]['Retail Week'].max()
 
 st.sidebar.title('Merch Dashboard')
 st.sidebar.header(f'{year} Week {week}')
-st.sidebar.markdown('_Last updated on June 28, 2021_')
+st.sidebar.markdown('_Last updated on July 5, 2021_')
 
 add_selectbox = st.sidebar.radio('Select Dashboard',
     ("Sales","Inventory","Inventory Aging","Pricing","Brand Info")
